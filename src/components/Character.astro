@@ -30,7 +30,7 @@ const bears = [
       {bears.map((b, i) => (
         <li class="bear-card reveal" data-delay={String(i + 1)}>
           <div class={`bear-circle tone-${b.tone}`}>
-            <Image src={b.img} alt={`白くま（${b.cap}）`} class="bear-img" />
+            <Image src={b.img} alt={`白くま（${b.cap}）`} class="bear-img" widths={[200, 400]} sizes="190px" />
           </div>
           <span class="bear-cap">{b.cap}</span>
         </li>

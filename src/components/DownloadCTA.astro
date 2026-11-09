@@ -16,11 +16,11 @@ import bear from '../assets/bear-lounge.png';
       <div class="cta-content">
         <h2 class="cta-title">さあ、ぽちぱち<br />はじめよう！</h2>
         <p class="cta-sub">むずかしいことはなし。今日からあなたも、ぽちぱち仲間♪</p>
-        <StoreBadges align="start" class="cta-badges" />
+        <StoreBadges align="start" centerOnMobile />
       </div>
 
       <div class="cta-bear-wrap">
-        <Image src={bear} alt="" class="cta-bear" aria-hidden="true" />
+        <Image src={bear} alt="" class="cta-bear" aria-hidden="true" widths={[240, 480]} sizes="240px" />
       </div>
     </div>
   </div>
@@ -72,13 +72,11 @@ import bear from '../assets/bear-lounge.png';
   .cta-d--4 { top: 60%; left: 46%; }
   .cta-d--5 { top: 6%; right: 30%; opacity: 0.85; }
 
-  @media (max-width: 760px) {
+  @media (max-width: 860px) {
     .cta-panel { grid-template-columns: 1fr; text-align: center; }
     .cta-content { order: 2; display: flex; flex-direction: column; align-items: center; }
     .cta-bear-wrap { order: 1; }
     .cta-bear { width: min(190px, 50vw); }
-    .cta-badges { align-items: center; }
-    :global(.cta-badges[data-align='start']) { align-items: center; }
-    :global(.cta-badges[data-align='start'] .badge-row) { justify-content: center; }
+    .cta-d--4 { display: none; } /* 縦積み時は本文に重なるので隠す */
   }
 </style>

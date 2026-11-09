@@ -30,6 +30,7 @@ const loop = [...phrases, ...phrases];
   .catchband {
     position: relative;
     z-index: 3;
+    overflow-x: clip; /* 幅112%のリボンで横スクロールが出ないように */
     margin-block: clamp(-6px, -1vw, -10px) clamp(20px, 4vw, 40px);
   }
   .ribbon {

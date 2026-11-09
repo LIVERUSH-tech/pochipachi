@@ -24,7 +24,7 @@ import bear from '../assets/bear-lounge.png';
 
   <div class="container hero-inner">
     <div class="hero-copy">
-      <Image src={logo} alt="ぽちぱちパニック" class="hero-logo reveal" loading="eager" />
+      <Image src={logo} alt="ぽちぱちパニック" class="hero-logo reveal" loading="eager" widths={[400, 760]} sizes="(max-width: 860px) 84vw, 380px" />
       <span class="eyebrow reveal" data-delay="1">
         <Deco type="star" color="var(--banana)" size={16} /> 毎日のちょこっと癒しパズル
       </span>
@@ -36,7 +36,7 @@ import bear from '../assets/bear-lounge.png';
         可愛い白くまと過ごす、ほっと癒しの時間をはじめよう。
       </p>
       <div class="reveal" data-delay="3">
-        <StoreBadges align="start" />
+        <StoreBadges align="start" centerOnMobile />
       </div>
       <p class="hero-meta reveal" data-delay="4">
         <span class="meta-pill">基本プレイ無料</span>
@@ -47,10 +47,10 @@ import bear from '../assets/bear-lounge.png';
     <div class="hero-visual reveal" data-delay="2">
       <div class="phone anim-bob">
         <div class="phone__screen">
-          <Image src={gameplay} alt="ぽちぱちパニックのプレイ画面。数字のマスに色を置いてイラストを完成させる" loading="eager" />
+          <Image src={gameplay} alt="ぽちぱちパニックのプレイ画面。数字のマスに色を置いてイラストを完成させる" loading="eager" fetchpriority="high" widths={[300, 600]} sizes="(max-width: 400px) 72vw, 280px" />
         </div>
       </div>
-      <Image src={bear} alt="" class="hero-bear" aria-hidden="true" />
+      <Image src={bear} alt="" class="hero-bear" aria-hidden="true" widths={[240, 480]} sizes="(max-width: 960px) 24vw, 230px" />
       <Deco type="star" color="var(--pink)" size={26} class="anim-twinkle hero-d hero-d--star3" />
       <Deco type="sparkle" color="var(--banana)" size={28} class="anim-twinkle hero-d hero-d--sp3" />
     </div>
@@ -158,5 +158,8 @@ import bear from '../assets/bear-lounge.png';
     .hero-meta { justify-content: center; }
     .pc-only { display: none; }
     .hero-d--star2, .hero-d--sp2, .hero-d--heart { display: none; }
+    /* 縦積み時はスマホモックや本文に重なるので、位置を逃がす／隠す */
+    .hero-d--sp1, .hero-d--cloud1, .hero-d--cloud2, .hero-d--banana { display: none; }
+    .hero-d--star1 { top: 2%; left: 3%; }
   }
 </style>

@@ -15,6 +15,9 @@ const {
   size = 40,
   class: cls = '',
   style = '',
+  // 親コンポーネントのスコープ属性（data-astro-cid-*）を受け取り、
+  // 親側の .xxx-d { position:absolute } などが svg に効くようにする
+  ...rest
 } = Astro.props;
 
 const s = typeof size === 'number' ? `${size}px` : size;
@@ -22,6 +25,7 @@ const stroke = outline ? 'var(--navy-strong)' : 'none';
 const sw = outline ? 1.6 : 0;
 ---
 <svg
+  {...rest}
   class={`deco ${cls}`}
   style={`width:${s};height:${s};${style}`}
   viewBox="0 0 24 24"
