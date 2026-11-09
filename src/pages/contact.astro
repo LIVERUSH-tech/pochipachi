@@ -1,0 +1,58 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { PRIMARY_OPERATOR, CONTACT, SERVICE_NAME } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const subject = encodeURIComponent(`【${SERVICE_NAME}】お問い合わせ`);
+const body = encodeURIComponent(
+  [
+    'お問い合わせ内容：',
+    '',
+    '',
+    '---',
+    'ご利用の端末（機種名）：',
+    'OS とバージョン：',
+    'アプリ内のユーザー ID（わかる場合）：',
+  ].join('\n'),
+);
+---
+<Legal
+  title="お問い合わせ"
+  description={`「${SERVICE_NAME}」に関するお問い合わせ窓口のご案内です。`}
+>
+  <p>「{SERVICE_NAME}」に関するご質問・ご意見・不具合のご報告は、下記のメールアドレスまでお気軽にご連絡ください。</p>
+
+  <div class="box">
+    <strong>お問い合わせ先メールアドレス</strong><br />
+    <a href={`mailto:${CONTACT.email}?subject=${subject}&body=${body}`}>{CONTACT.email}</a>
+  </div>
+
+  <p>{CONTACT.responseNote}</p>
+
+  <h2>お問い合わせの前に</h2>
+  <p>よくいただくご質問は、トップページの「<a href={`${base}/#faq`}>よくあるご質問</a>」にまとめています。あわせてご確認ください。</p>
+
+  <h2>スムーズなご案内のために</h2>
+  <p>不具合のご報告の際は、次の情報をあわせてお知らせください。</p>
+  <ul>
+    <li>ご利用の端末の機種名</li>
+    <li>OS の種類とバージョン（例：iOS 18.1、Android 15）</li>
+    <li>アプリ内のユーザー ID（表示されている場合）</li>
+    <li>発生した日時と、どの画面で何をしたときに起きたか</li>
+    <li>画面のスクリーンショット（可能な場合）</li>
+  </ul>
+
+  <h2>ご注意</h2>
+  <ul>
+    <li>お問い合わせの内容によっては、ご返信までお時間をいただく場合や、お答えできない場合があります。</li>
+    <li>抽選の結果や当選者の選定方法に関するお問い合わせにはお答えできません。</li>
+    <li>迷惑メール対策をされている場合は、「{CONTACT.email.split('@')[1]}」からのメールを受信できるよう設定してください。</li>
+    <li>いただいた個人情報は、「<a href={`${base}/privacy/`}>プライバシーポリシー</a>」に従って取り扱います。</li>
+  </ul>
+
+  <h2>運営会社</h2>
+  <p>
+    {PRIMARY_OPERATOR.name}<br />
+    {PRIMARY_OPERATOR.address}
+  </p>
+</Legal>

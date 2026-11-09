@@ -33,7 +33,7 @@ const items = [
       {items.map((it, i) => (
         <figure class={`gallery-item tone-${it.tone} reveal`} data-delay={String((i % 4) + 1)} style={`--rot:${it.rot}`}>
           <div class="gallery-frame">
-            <Image src={it.img} alt={it.cap} />
+            <Image src={it.img} alt={it.cap} widths={[360, 720]} sizes="(max-width: 480px) 320px, (max-width: 860px) 46vw, 300px" />
           </div>
           <figcaption class="gallery-cap">{it.cap}</figcaption>
         </figure>

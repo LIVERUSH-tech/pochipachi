@@ -2,14 +2,19 @@
 import { Image } from 'astro:assets';
 import Deco from './Deco.astro';
 import logo from '../assets/logo-trimmed.png';
+import { OPERATORS, LEGAL_LINKS, SERVICE_NAME } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/`;
 
 const links = [
-  { href: '#features', label: '特徴' },
-  { href: '#how', label: '遊び方' },
-  { href: '#gallery', label: 'ギャラリー' },
-  { href: '#rewards', label: 'ごほうび' },
-  { href: '#faq', label: 'FAQ' },
+  { href: `${home}#features`, label: '特徴' },
+  { href: `${home}#how`, label: '遊び方' },
+  { href: `${home}#gallery`, label: 'ギャラリー' },
+  { href: `${home}#rewards`, label: 'ごほうび' },
+  { href: `${home}#faq`, label: 'FAQ' },
 ];
+const legal = LEGAL_LINKS.map((l) => ({ href: `${base}/${l.path}`, label: l.label }));
 const year = 2026;
 ---
 <div class="wave footer-wave" aria-hidden="true">
@@ -25,7 +30,7 @@ const year = 2026;
 
   <div class="container footer-inner">
     <div class="footer-brand">
-      <Image src={logo} alt="ぽちぱちパニック" class="footer-logo" />
+      <a href={home}><Image src={logo} alt={SERVICE_NAME} class="footer-logo" widths={[100, 180]} sizes="90px" /></a>
       <p class="footer-tag">毎日のちょこっと癒しパズル</p>
     </div>
 
@@ -38,9 +43,26 @@ const year = 2026;
     </nav>
   </div>
 
+  <div class="container footer-company">
+    <p class="footer-company-label">運営会社</p>
+    <ul class="footer-company-list">
+      {OPERATORS.map((o) => (
+        <li><a href={o.url} target="_blank" rel="noopener">{o.name}</a></li>
+      ))}
+    </ul>
+  </div>
+
+  <nav class="container footer-legal" aria-label="規約・サポート">
+    <ul>
+      {legal.map((l) => (
+        <li><a href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
   <div class="container footer-bottom">
     <p class="footer-note">※掲載の画像・内容は開発中のものです。仕様は変更になる場合があります。</p>
-    <p class="footer-copy">&copy; {year} ぽちぱちパニック</p>
+    <p class="footer-copy">&copy; {year} {SERVICE_NAME}</p>
   </div>
 </footer>
 
@@ -88,6 +110,57 @@ const year = 2026;
     transition: color 0.18s ease;
   }
   .footer-nav a:hover { color: var(--banana); }
+
+  .footer-company {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+  }
+  .footer-company-label {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 2px 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+  }
+  .footer-company-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+  .footer-company-list a {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+    text-underline-offset: 3px;
+    transition: color 0.18s ease;
+  }
+  .footer-company-list a:hover { color: var(--banana); }
+
+  .footer-legal {
+    position: relative;
+    z-index: 2;
+    margin-top: 16px;
+  }
+  .footer-legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+  .footer-legal a {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.72);
+    transition: color 0.18s ease;
+  }
+  .footer-legal a:hover { color: var(--banana); }
 
   .footer-bottom {
     position: relative;

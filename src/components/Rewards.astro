@@ -40,7 +40,7 @@ const items = [
         {rewards.map((r) => (
           <li class="reward">
             <div class={`reward-icon tone-${r.tone}`}>
-              <Image src={r.img} alt="" class="reward-img" />
+              <Image src={r.img} alt="" class="reward-img" widths={[120]} sizes="56px" />
             </div>
             <p class="reward-name">{r.name}</p>
             <p class="reward-desc">{r.desc}</p>
@@ -58,7 +58,7 @@ const items = [
         {items.map((it) => (
           <li class="powerup">
             <div class="powerup-icon">
-              <Image src={it.img} alt="" />
+              <Image src={it.img} alt="" widths={[150]} sizes="72px" />
             </div>
             <p class="powerup-name">{it.name}</p>
             <p class="powerup-desc">{it.desc}</p>
