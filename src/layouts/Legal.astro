@@ -1,0 +1,179 @@
+---
+// 規約・ポリシーなど、文章中心の下層ページ用レイアウト
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SERVICE_NAME } from '../data/site';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** 見出し下に出す日付など（例: 制定日） */
+  meta?: string[];
+}
+
+const { title, description, meta = [] } = Astro.props;
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+<Base title={`${title}｜${SERVICE_NAME}`} description={description}>
+  <Header />
+  <main class="legal">
+    <div class="container legal-container">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <ol>
+          <li><a href={home}>トップ</a></li>
+          <li aria-current="page">{title}</li>
+        </ol>
+      </nav>
+
+      <article class="legal-card">
+        <header class="legal-head">
+          <h1 class="legal-title">{title}</h1>
+          {meta.length > 0 && (
+            <p class="legal-meta">
+              {meta.map((m) => <span>{m}</span>)}
+            </p>
+          )}
+        </header>
+        <div class="legal-body">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(28px, 5vw, 56px) clamp(56px, 8vw, 96px);
+  }
+  .legal-container { max-width: 860px; }
+
+  .breadcrumb ol {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink-soft, rgba(40, 40, 80, 0.7));
+    margin-bottom: 18px;
+  }
+  .breadcrumb li + li::before { content: '›'; margin-right: 6px; opacity: 0.6; }
+  .breadcrumb a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .breadcrumb a:hover { color: var(--pink-deep); }
+
+  .legal-card {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-card);
+    padding: clamp(24px, 5vw, 56px) clamp(20px, 5vw, 60px);
+  }
+
+  .legal-head {
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    border-bottom: 2px dashed rgba(60, 60, 120, 0.2);
+  }
+  .legal-title {
+    font-family: var(--font-display);
+    color: var(--navy);
+    font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+    line-height: 1.4;
+  }
+  .legal-meta {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 0.85rem;
+    color: rgba(40, 40, 80, 0.7);
+  }
+
+  /* 本文（slot の中身）のタイポグラフィ */
+  .legal-body {
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.95;
+    overflow-wrap: anywhere;
+  }
+  .legal-body :global(h2) {
+    font-family: var(--font-display);
+    color: var(--navy);
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    line-height: 1.5;
+    margin-top: 2.4em;
+    margin-bottom: 0.7em;
+    padding-left: 14px;
+    border-left: 5px solid var(--pink);
+  }
+  .legal-body :global(h2:first-child) { margin-top: 0; }
+  .legal-body :global(h3) {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-top: 1.6em;
+    margin-bottom: 0.4em;
+  }
+  .legal-body :global(p) { margin-block: 0.7em; }
+  .legal-body :global(ol),
+  .legal-body :global(ul) { padding-left: 1.6em; margin-block: 0.6em; }
+  .legal-body :global(li) { margin-block: 0.3em; }
+  .legal-body :global(li > ol),
+  .legal-body :global(li > ul) { margin-block: 0.3em; }
+  .legal-body :global(a) {
+    color: var(--sky-deep);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal-body :global(a:hover) { color: var(--pink-deep); }
+
+  .legal-body :global(.table-wrap) { overflow-x: auto; margin-block: 1em; }
+  .legal-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+  .legal-body :global(th),
+  .legal-body :global(td) {
+    border: 1.5px solid rgba(60, 60, 120, 0.2);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .legal-body :global(th) {
+    background: var(--sky-soft, #eaf6fd);
+    color: var(--navy);
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  /* 項目名・内容の2列の表（特商法表記など）はスマホで縦積み */
+  @media (max-width: 600px) {
+    .legal-body :global(table.dl-table),
+    .legal-body :global(table.dl-table tbody),
+    .legal-body :global(table.dl-table tr),
+    .legal-body :global(table.dl-table th),
+    .legal-body :global(table.dl-table td) { display: block; width: 100%; }
+    .legal-body :global(table.dl-table th) { white-space: normal; border-bottom: none; }
+    .legal-body :global(table.dl-table tr + tr th) { border-top: none; }
+  }
+
+  .legal-body :global(.box) {
+    background: var(--cream, #fffaf0);
+    border: 2px solid rgba(60, 60, 120, 0.15);
+    border-radius: var(--r-md);
+    padding: 16px 20px;
+    margin-block: 1em;
+  }
+  .legal-body :global(.closing) {
+    margin-top: 2.6em;
+    text-align: right;
+    color: rgba(40, 40, 80, 0.75);
+    font-size: 0.88rem;
+  }
+</style>

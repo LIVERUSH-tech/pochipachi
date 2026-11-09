@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { OPERATORS, SERVICE_NAME } from '../data/site';
 
 export interface Props {
   title?: string;
@@ -16,7 +17,26 @@ const {
 const base = import.meta.env.BASE_URL;
 const asset = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
 const ogImage = Astro.site ? new URL(asset('og.jpg'), Astro.site).toString() : asset('og.jpg');
-const canonical = Astro.site ? new URL(base, Astro.site).toString() : undefined;
+// ページごとの canonical（トップ以外のページでも自分自身の URL を指す）
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const siteUrl = Astro.site ? new URL(base, Astro.site).toString() : undefined;
+
+// 構造化データ（検索エンジン向け）: サイトと運営会社
+const operators = OPERATORS.map((o) => ({
+  '@type': 'Organization',
+  name: o.name,
+  alternateName: o.nameEn,
+  url: o.url,
+}));
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SERVICE_NAME,
+  url: siteUrl,
+  description,
+  inLanguage: 'ja',
+  publisher: operators,
+};
 ---
 
 <!doctype html>
@@ -37,6 +57,9 @@ const canonical = Astro.site ? new URL(base, Astro.site).toString() : undefined;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ぽちぱちパニック" />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content="ぽちぱちパニック" />
     <meta property="og:locale" content="ja_JP" />
@@ -44,6 +67,11 @@ const canonical = Astro.site ? new URL(base, Astro.site).toString() : undefined;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- JS が無効な環境でも、スクロール出現要素が見えなくならないように -->
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

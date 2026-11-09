@@ -1,0 +1,78 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { PRIMARY_OPERATOR, CONTACT, LEGAL_DATES, SERVICE_NAME } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Legal
+  title="特定商取引法に基づく表記"
+  description={`「${SERVICE_NAME}」の特定商取引法に基づく表記です。`}
+  meta={[`制定日：${LEGAL_DATES.tokushoho.established}`]}
+>
+  <p>本表記は、「{SERVICE_NAME}」において有料のコンテンツ・アイテムを提供する場合の取引条件を示すものです。</p>
+
+  <div class="table-wrap">
+    <table class="dl-table">
+      <tbody>
+        <tr>
+          <th scope="row">販売事業者</th>
+          <td>{PRIMARY_OPERATOR.name}</td>
+        </tr>
+        <tr>
+          <th scope="row">運営統括責任者</th>
+          <td>代表取締役 {PRIMARY_OPERATOR.representative}</td>
+        </tr>
+        <tr>
+          <th scope="row">所在地</th>
+          <td>{PRIMARY_OPERATOR.address}</td>
+        </tr>
+        <tr>
+          <th scope="row">電話番号</th>
+          <td>請求があった場合には、遅滞なく開示いたします。お問い合わせは下記メールアドレスまでお願いいたします。</td>
+        </tr>
+        <tr>
+          <th scope="row">メールアドレス</th>
+          <td><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></td>
+        </tr>
+        <tr>
+          <th scope="row">販売価格</th>
+          <td>各コンテンツ・アイテムの購入画面に表示する価格（消費税込み）とします。</td>
+        </tr>
+        <tr>
+          <th scope="row">商品代金以外の必要料金</th>
+          <td>本サービスのダウンロードおよび利用に必要なインターネット通信料は、お客様のご負担となります。</td>
+        </tr>
+        <tr>
+          <th scope="row">支払方法</th>
+          <td>App Store（Apple）または Google Play（Google）が提供する決済方法によるものとします。</td>
+        </tr>
+        <tr>
+          <th scope="row">支払時期</th>
+          <td>各ストアの利用規約に定める時期とします。</td>
+        </tr>
+        <tr>
+          <th scope="row">商品の引渡時期</th>
+          <td>購入手続きの完了後、直ちにご利用いただけます。</td>
+        </tr>
+        <tr>
+          <th scope="row">返品・キャンセル</th>
+          <td>デジタルコンテンツの性質上、購入確定後の返品・キャンセル・返金はお受けできません。ただし、法令に定めがある場合はこの限りではありません。</td>
+        </tr>
+        <tr>
+          <th scope="row">動作環境</th>
+          <td>App Store または Google Play の本サービス紹介ページに記載の動作環境をご確認ください。</td>
+        </tr>
+        <tr>
+          <th scope="row">販売数量・期間の制限</th>
+          <td>コンテンツ・アイテムによって、販売数量や販売期間に制限を設ける場合があります。その場合は購入画面に表示します。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    本サービスで獲得できるポイントは無償で付与されるものであり、有償での販売は行っておりません。ポイントおよび抽選の詳細は「<a href={`${base}/terms/`}>利用規約</a>」をご確認ください。
+  </p>
+
+  <p class="closing">以上</p>
+</Legal>
