@@ -42,14 +42,22 @@ public/           favicon.svg / og.jpg など
 
 ## 公開（Cloudflare Pages）
 
-GitHub リポジトリ `LIVERUSH-tech/pochipachi` を Cloudflare Pages に Git 連携しています。
-`main` に push すると Cloudflare 側で自動ビルド＆本番公開、PR ごとにプレビューURLが発行されます。
+GitHub Actions（`.github/workflows/deploy.yml`）でビルドし、Wrangler で Cloudflare Pages に公開します。
+`main` に push すると本番公開、PR ごとにプレビューURLが発行されます（Actions タブから手動実行も可）。
 
 | 項目 | 値 |
 | --- | --- |
+| Pages プロジェクト | `pochipachi`（Cloudflare アカウント: LIVE RUSH） |
 | ビルドコマンド | `npm run build` |
 | 出力ディレクトリ | `dist` |
 | 独自ドメイン | `pochipachi.com`（`www.pochipachi.com` も接続） |
+
+リポジトリの Secrets に以下が必要です。
+
+| Secret | 内容 |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | 権限「Account › Cloudflare Pages › Edit」を付けた API トークン |
+| `CLOUDFLARE_ACCOUNT_ID` | LIVE RUSH アカウントの Account ID |
 
 `astro.config.mjs` の `site`（`https://pochipachi.com`）は OGP/canonical の絶対URL生成に使われます。
 
