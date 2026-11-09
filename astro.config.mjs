@@ -2,27 +2,21 @@
 import { defineConfig } from 'astro/config';
 
 // ============================================================================
-//  GitHub Pages 公開設定
+//  Cloudflare Pages 公開設定
 //  ---------------------------------------------------------------------------
-//  想定: プロジェクトページ  https://<ユーザー名>.github.io/pochipachi/
+//  公開URL: https://pochipachi.com/
 //
-//  ▸ SITE … OGP / sitemap などの「絶対URL」生成に使われます。
-//           このアカウントは独自ドメイン tatsuki.dev が設定済みのため、
-//           プロジェクトページは https://tatsuki.dev/pochipachi/ で公開されます。
-//           （tatsukikitamura.github.io/pochipachi/ からも転送されます）
-//  ▸ BASE … サイトの公開ディレクトリ。リポジトリ名が "pochipachi" 以外なら
-//           '/<リポジトリ名>' に変更してください。
-//           ルート(独自ドメイン直下など)で公開する場合は BASE = '/' に変更してください。
+//  ▸ SITE … OGP / canonical などの「絶対URL」生成に使われます。
+//  ▸ BASE … 独自ドメイン直下で公開するため '/'。
 // ============================================================================
-const SITE = 'https://tatsuki.dev';
-const BASE = '/pochipachi';
+const SITE = 'https://pochipachi.com';
+const BASE = '/';
 
 export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: 'ignore',
   build: {
-    // index.html を /pochipachi/ 直下に出力（GitHub Pages 向け）
     format: 'directory',
   },
 });

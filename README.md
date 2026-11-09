@@ -1,9 +1,9 @@
 # ぽちぱちパニック ランディングページ
 
 数字のマスを *ぽちぱち* タップして色を置き、可愛い白くまの絵を完成させる癒し系パズルゲーム
-**「ぽちぱちパニック」** の紹介LPです。[Astro](https://astro.build/)製・GitHub Actions で GitHub Pages に自動公開します。
+**「ぽちぱちパニック」** の紹介LPです。[Astro](https://astro.build/)製・Cloudflare Pages で自動公開します。
 
-🔗 公開URL: https://tatsuki.dev/pochipachi/ （`tatsukikitamura.github.io/pochipachi/` からも転送されます）
+🔗 公開URL: https://pochipachi.com/
 
 ---
 
@@ -18,7 +18,7 @@
 
 ```bash
 npm install      # 依存をインストール
-npm run dev      # 開発サーバー  → http://localhost:4321/pochipachi/
+npm run dev      # 開発サーバー  → http://localhost:4321/
 npm run build    # 本番ビルド    → dist/
 npm run preview  # ビルド結果をプレビュー
 ```
@@ -35,28 +35,23 @@ src/
 ├─ pages/         index.astro（LP本体）
 └─ styles/        global.css（デザイントークン＋共通スタイル）
 public/           favicon.svg / og.jpg など
-.github/workflows/deploy.yml   GitHub Pages 自動デプロイ
 ```
 
 > `material/` は元素材フォルダです。内部用の依頼書（非公開リンクを含む）が入っているため、
 > `.gitignore` で公開リポジトリから除外しています。LP は `src/assets/` のコピーを使います。
 
-## 公開（GitHub Pages × GitHub Actions）
+## 公開（Cloudflare Pages）
 
-`main` ブランチに push すると、`.github/workflows/deploy.yml` が自動でビルド＆公開します。
+GitHub リポジトリ `LIVERUSH-tech/pochipachi` を Cloudflare Pages に Git 連携しています。
+`main` に push すると Cloudflare 側で自動ビルド＆本番公開、PR ごとにプレビューURLが発行されます。
 
-初回のみ、GitHub リポジトリの **Settings › Pages › Build and deployment › Source** を
-**「GitHub Actions」** に設定してください。
-
-### 公開先を変えるとき（`astro.config.mjs`）
-
-| 公開形態 | `base` の設定 |
+| 項目 | 値 |
 | --- | --- |
-| プロジェクトページ `…github.io/pochipachi/`（現在の設定） | `'/pochipachi'` |
-| リポジトリ名が違う場合 | `'/<リポジトリ名>'` |
-| ユーザーページ `…github.io/` や独自ドメイン | `'/'` |
+| ビルドコマンド | `npm run build` |
+| 出力ディレクトリ | `dist` |
+| 独自ドメイン | `pochipachi.com`（`www.pochipachi.com` も接続） |
 
-`site`（`https://tatsuki.dev`）は OGP/サイトマップの絶対URL生成に使われます。
+`astro.config.mjs` の `site`（`https://pochipachi.com`）は OGP/canonical の絶対URL生成に使われます。
 
 ## カスタマイズのヒント
 

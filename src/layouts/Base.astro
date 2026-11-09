@@ -12,7 +12,7 @@ const {
     '数字のマスをぽちぱちタップして色を置くだけ。気づけば夢中、気づけばポイント！可愛い白くまと遊ぶ、毎日のちょこっと癒しパズル「ぽちぱちパニック」。',
 } = Astro.props;
 
-// GitHub Pages の base を尊重したパス生成
+// base を尊重したパス生成
 const base = import.meta.env.BASE_URL;
 const asset = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
 const ogImage = Astro.site ? new URL(asset('og.jpg'), Astro.site).toString() : asset('og.jpg');
