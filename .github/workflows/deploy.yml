@@ -1,0 +1,49 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  # main への push で本番公開
+  push:
+    branches: [main]
+  # PR ごとにプレビューURLを発行（フォークからのPRはシークレットが渡らないため対象外）
+  pull_request:
+  # 手動実行も可能
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+# 同じブランチのデプロイは最新のものだけ実行
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >-
+            pages deploy dist
+            --project-name=pochipachi
+            --branch=${{ github.head_ref || github.ref_name }}
+            --commit-hash=${{ github.event.pull_request.head.sha || github.sha }}
+          # PR 画面に GitHub Deployment としてプレビューURLを表示
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
